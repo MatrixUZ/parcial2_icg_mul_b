@@ -1,0 +1,56 @@
+<input type=text size=2 id='nf'/>
+<button onclick='main()'>Ejecutar</button>
+<canvas id='canvas' width=800 height=600>
+<script>
+	var ctx;
+
+	function color(r, g, b) {
+        return 'rgba(' + r*2.55 + ',' + g*2.55 + ',' + b*2.55 + ')'
+	}
+
+	function polygon(a, colorBorde, colorRelleno, grosor) { 
+		ctx.beginPath()
+		ctx.strokeStyle = colorBorde
+		ctx.fillStyle = colorRelleno
+		ctx.lineWidth = grosor;
+		ctx.moveTo(a[0],a[1])
+		for (i=2; i < a.length; i+=2)
+		ctx.lineTo(a[i],a[i+1]);
+		ctx.closePath()
+		ctx.stroke()
+		ctx.fill()
+	}
+
+	function recorte(a){
+		ctx.beginPath();
+		ctx.moveTo(a[0],a[1])
+		for (i=2; i < a.length; i+=2)
+			ctx.lineTo(a[i],a[i+1]);	
+		ctx.clip();
+    }
+
+    function main() {
+var canvas = document.getElementById('canvas')
+ctx = canvas.getContext('2d');
+var nc = parseInt(document.getElementById('nf').value)
+alert(nc + 1)
+for(let j =0; j<3 ; j++)
+ {
+for(let i=0;i<nc;i++)
+                    {
+                        if(j==0)
+                        {
+                          ctx.fillStyle = color((nc-i)/nc*100,0,0);
+                        } if (j==1)
+                        {
+                          ctx.fillStyle = color(0,(nc-i)/nc*100,0);
+                        } if (j==2)
+                        {
+                          ctx.fillStyle = color(0,0,100*(nc-i)/nc);
+                        }
+                    ctx.fillRect(j*100, i*500/nc,100, 500/nc);
+                    }
+                }
+ }
+
+</script>
